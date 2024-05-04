@@ -1,11 +1,9 @@
 <?php
-
 session_start();
 $error = '';
 if (isset($_SESSION['user_data'])) {
     header("location:chatroom.php");
 }
-
 if (isset($_POST['login'])) {
     require_once "database/ChatUser.php";
     $user_obj = new ChatUser;

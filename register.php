@@ -1,21 +1,16 @@
 <?php
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-
 require "vendor/autoload.php";
 $error = '';
 $success_message = '';
 
 if (isset($_POST["register"])) {
-
     session_start();
-
     if (isset($_POST["user_data"])) {
         header("location:chatroom.php");
     }
-
     require_once "database/ChatUser.php";
     $user_obj = new ChatUser;
     $user_obj->setUserName($_POST['user_name']);
@@ -27,7 +22,6 @@ if (isset($_POST["register"])) {
     $user_obj->setUserVerificationCode(md5(uniqid()));
     $user_obj->setUserLoginStatus('Logout');
     $user_data = $user_obj->get_user_data_by_email();
-
     if (is_array($user_data) && count($user_data) > 0) {
         $error = 'This email is already registered';
     } else {
@@ -52,7 +46,6 @@ if (isset($_POST["register"])) {
             <p>Thank you...</p>
             ';
             $mail->send();
-
             $success_message = 'Verification mail sent to ' . $user_obj->getUserEmail() . ', So before login first verify your email';
         } else {
             $error = 'Something went wrong';
